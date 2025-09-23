@@ -3,36 +3,36 @@ using UnityEngine.Events;
 
 public class ColliderEvents : MonoBehaviour
 {
-    public UnityEvent TriggerEnter, TriggerExit, TriggerStay;
-    public UnityEvent CollisionEnter, CollisionExit, CollisionStay;
+    public UnityEvent<Collider> TriggerEnter, TriggerExit, TriggerStay;
+    public UnityEvent<Collision> CollisionEnter, CollisionExit, CollisionStay;
 
     private void OnTriggerEnter(Collider other)
     {
-        TriggerEnter.Invoke();
+        TriggerEnter.Invoke(other);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        TriggerExit.Invoke();
+        TriggerExit.Invoke(other);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        TriggerStay.Invoke();
+        TriggerStay.Invoke(other);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        CollisionEnter.Invoke();
+        CollisionEnter.Invoke(collision);
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        CollisionExit.Invoke();
+        CollisionExit.Invoke(collision);
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        CollisionStay.Invoke();
+        CollisionStay.Invoke(collision);
     }
 }

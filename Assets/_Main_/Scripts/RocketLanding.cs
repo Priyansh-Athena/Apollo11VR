@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,6 +6,8 @@ public class RocketLanding : MonoBehaviour
 {
     [Header("Landing Settings")]
     public Transform landingTarget;
+    [SerializeField] AudioSource rocketAudio;
+    [SerializeField] AudioClip landClip;
     public float maxSpeed = 10f;
     public float minSpeed = 0.5f;
     public float slowDownDistance = 10f;
@@ -14,10 +17,10 @@ public class RocketLanding : MonoBehaviour
     public UnityEvent onLandingComplete;
 
     private bool isLanding = false;
+    public static bool hasLanded = false;
 
     private void Start()
     {
-        StartLanding();
     }
 
     void Update()
@@ -29,11 +32,15 @@ public class RocketLanding : MonoBehaviour
 
             if (distance < landingThreshold)
             {
+                Debug.Log("Threshold reached");
+                rocketAudio.playOnAwake = false;
+                rocketAudio.loop = false;
+                rocketAudio.Stop();
+                rocketAudio.PlayOneShot(landClip);
                 transform.position = landingTarget.position;
                 isLanding = false;
 
-                // Fire the event
-                onLandingComplete?.Invoke();
+                StartCoroutine(StopLanding());
                 return;
             }
 
@@ -47,5 +54,14 @@ public class RocketLanding : MonoBehaviour
     public void StartLanding()
     {
         isLanding = true;
+        rocketAudio.Play();
+    }
+
+    public IEnumerator StopLanding()
+    {
+        yield return new WaitForSeconds(2f);
+        hasLanded = true;
+        Debug.Log("Landing Stoppped");
+        onLandingComplete?.Invoke();
     }
 }

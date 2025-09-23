@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 49bafb3999a75644084d14dc572fec9a
+AssetOrigin:
+  serializedVersion: 1
+  productId: 243012
+  packageName: Curved Path Generator
+  packageVersion: 2.0.2
+  assetPath: Assets/CurvedPathGenerator/Shader/ScrollingShader.shader
+  uploadId: 624974
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _MainTex: {fileID: 2800000, guid: acbb9e808e436d345a53495cf9f003ac, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

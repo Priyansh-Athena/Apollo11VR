@@ -10,23 +10,32 @@ public class Space : MonoBehaviour
     [SerializeField] string moonLandingSceneName;
     [SerializeField] Loading loading;
 
+    float actualDistanceBwMoonAndEarth = 384400f;
+    float scaledDistanceBwMoonAndEarth;
+    bool landingStarted = false;
+
     void Start()
     {
+        scaledDistanceBwMoonAndEarth = landingTr.position.z - transform.position.z;
         loading.HideLoading();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float remainingDistance = (landingTr.position.z - transform.position.z);
-        if (remainingDistance < 0f)
+        if (!landingStarted)
         {
-            remainingDistance = 0f;
-            StartCoroutine(ReachedLandingPointTasks());
+            float remainingDistance = ((landingTr.position.z - transform.position.z) / scaledDistanceBwMoonAndEarth) * actualDistanceBwMoonAndEarth;
+            distanceTxt.text = $"Disntace Remaining: {remainingDistance:F0} km";
         }
-        else
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("LandingPoint"))
         {
-            distanceTxt.text = $"Disntace Remaining: {remainingDistance:F0}m";
+            landingStarted = true;
+            StartCoroutine(ReachedLandingPointTasks());
         }
     }
 
